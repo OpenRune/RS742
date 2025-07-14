@@ -30,11 +30,11 @@ public class Browser {
             } catch (Exception var7) {
             }
         }
-        if (Statics.field2247.startsWith("win") && !arg4) {
+        if (Statics.osName.startsWith("win") && !arg4) {
             method12203(arg0, 0);
             return;
         }
-        if (Statics.field2247.startsWith("mac")) {
+        if (Statics.osName.startsWith("mac")) {
             method1814(arg0, 1, arg3);
             return;
         }
@@ -50,7 +50,7 @@ public class Browser {
     public static boolean method1814(String arg0, int arg1, String arg2) {
         if (arg1 == 0) {
             try {
-                if (!Statics.field2247.startsWith("win")) {
+                if (!Statics.osName.startsWith("win")) {
                     throw new Exception();
                 } else if (arg0.startsWith("http://") || arg0.startsWith("https://")) {
                     String var3 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789?&=,.%+-_#:/*";

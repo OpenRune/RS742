@@ -4,32 +4,32 @@ import deob.ObfuscatedName;
 public class ClientOptionsHardwareInfo {
 
     @ObfuscatedName("tr.u")
-    public int field6466;
+    public int maxHeapMemoryMb;
 
     @ObfuscatedName("tr.j")
-    public int field6465;
+    public int availableProcessors;
 
     @ObfuscatedName("tr.a")
-    public boolean field6464;
+    public boolean isArmArchitecture;
 
-    public ClientOptionsHardwareInfo(int arg0, int arg1, boolean arg2) {
-        this.field6466 = arg0;
-        this.field6465 = arg1;
-        this.field6464 = arg2;
+    public ClientOptionsHardwareInfo(int maxHeapMemoryMb, int availableProcessors, boolean isArmArchitecture) {
+        this.maxHeapMemoryMb = maxHeapMemoryMb;
+        this.availableProcessors = availableProcessors;
+        this.isArmArchitecture = isArmArchitecture;
     }
 
     @ObfuscatedName("tr.u(I)I")
     public int method11399() {
-        return this.field6466;
+        return this.maxHeapMemoryMb;
     }
 
     @ObfuscatedName("tr.j(I)I")
     public int method11398() {
-        return this.field6465;
+        return this.availableProcessors;
     }
 
     @ObfuscatedName("tr.a(I)Z")
     public boolean method11400() {
-        return this.field6464;
+        return this.isArmArchitecture;
     }
 }

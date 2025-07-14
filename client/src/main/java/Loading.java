@@ -344,7 +344,7 @@ public class Loading {
             Huffman var16 = new Huffman(Statics.field3523.method5645("huffman", ""));
             WordPack.method15896(var16);
             Statics.field8481 = Timer.method4777();
-            Statics.field2305 = new HardwarePlatform(true);
+            Statics.hardwarePlatform = new HardwarePlatform(true);
         }
         if (Statics.field1208 == LoadingStage.field3387) {
             int var17 = DefaultSprites.method12092(Statics.field7387) + Statics.fontProvider.method4840(true);
@@ -411,7 +411,7 @@ public class Loading {
             client.options.method15448(client.options.field9669, 1);
             if (client.field8911) {
                 client.options.method15448(client.options.toolkitDefault, 0);
-            } else if (client.options.toolkitDefault.field9844 && Statics.field2305.field9703 < 512 && Statics.field2305.field9703 != 0) {
+            } else if (client.options.toolkitDefault.field9844 && Statics.hardwarePlatform.cpuFeatures < 512 && Statics.hardwarePlatform.cpuFeatures != 0) {
                 client.options.method15448(client.options.toolkitDefault, 0);
             }
             Preferences.save();

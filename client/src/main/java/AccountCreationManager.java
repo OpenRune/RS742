@@ -112,7 +112,7 @@ public class AccountCreationManager {
                 if (var4 != null) {
                     var1.buf.pjstr(var4);
                 }
-                Statics.field2305.createHardwareBlock(var1.buf);
+                Statics.hardwarePlatform.createHardwareBlock(var1.buf);
                 var1.buf.pos += 7;
                 var1.buf.tinyenc(Statics.field630, var3, var1.buf.pos);
                 var1.buf.psize2(var1.buf.pos - var2);

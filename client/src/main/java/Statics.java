@@ -297,7 +297,7 @@ public class Statics {
     public static Sprite field2214;
 
     @ObfuscatedName("fe.bs")
-    public static String field2247;
+    public static String osName;
 
     @ObfuscatedName("gp.lk")
     public static int cameraOrbitX;
@@ -306,7 +306,7 @@ public class Statics {
     public static int field2304;
 
     @ObfuscatedName("gz.cy")
-    public static HardwarePlatform field2305;
+    public static HardwarePlatform hardwarePlatform;
 
     @ObfuscatedName("gk.bm")
     public static Language language;
@@ -537,7 +537,7 @@ public class Statics {
     public static int cameraRotateSpeed;
 
     @ObfuscatedName("mo.bl")
-    public static String field3788;
+    public static String javaVendorName;
 
     @ObfuscatedName("ta.bb")
     public static Sprite[] field383;
@@ -618,7 +618,7 @@ public class Statics {
     public static int field4138;
 
     @ObfuscatedName("nv.ba")
-    public static String field4150;
+    public static String osArch;
 
     @ObfuscatedName("ra.jx")
     public static Packet field416;
@@ -1323,7 +1323,7 @@ public class Statics {
     public static int volumeFadeRate;
 
     @ObfuscatedName("ap.bk")
-    public static String field726;
+    public static String javaVersion;
 
     @ObfuscatedName("wv.an")
     public static Sprite field7290;
@@ -1566,7 +1566,7 @@ public class Statics {
     public static Sprite[] field8538;
 
     @ObfuscatedName("az.bd")
-    public static String field862;
+    public static String osVersion;
 
     @ObfuscatedName("aay.fe")
     public static Js5 field8655;
@@ -2431,12 +2431,12 @@ public class Statics {
         boolean var1 = true;
         boolean var2 = false;
         boolean var3 = false;
-        if (field2305.field9703 < 512 && field2305.field9703 != 0) {
+        if (hardwarePlatform.cpuFeatures < 512 && hardwarePlatform.cpuFeatures != 0) {
             var1 = false;
             var0.method15941(128);
         }
         boolean var4;
-        if (field2247.startsWith("win")) {
+        if (osName.startsWith("win")) {
             var3 = true;
             var4 = true;
         } else {

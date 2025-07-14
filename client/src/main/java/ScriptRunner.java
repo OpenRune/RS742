@@ -11042,9 +11042,9 @@ public final class ScriptRunner {
 
     @ObfuscatedName("ig.agh(Lrn;I)V")
     public static final void method4558(ClientScriptState arg0) {
-        if (Statics.field2305.field9707 < 6) {
+        if (Statics.hardwarePlatform.javaVersionMajor < 6) {
             arg0.intStack[++arg0.isp - 1] = 0;
-        } else if (Statics.field2305.field9707 == 6 && Statics.field2305.field9701 < 10) {
+        } else if (Statics.hardwarePlatform.javaVersionMajor == 6 && Statics.hardwarePlatform.javaVersionPatch < 10) {
             arg0.intStack[++arg0.isp - 1] = 0;
         } else {
             arg0.intStack[++arg0.isp - 1] = 1;
@@ -12331,7 +12331,7 @@ public final class ScriptRunner {
 
     @ObfuscatedName("rm.amn(Lrn;I)V")
     public static final void method8593(ClientScriptState arg0) {
-        arg0.intStack[++arg0.isp - 1] = Statics.field2305.field9703 < 512 || client.field8911 || client.field8928 ? 1 : 0;
+        arg0.intStack[++arg0.isp - 1] = Statics.hardwarePlatform.cpuFeatures < 512 || client.field8911 || client.field8928 ? 1 : 0;
     }
 
     @ObfuscatedName("lu.amh(Lrn;I)V")

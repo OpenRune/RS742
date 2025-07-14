@@ -27,7 +27,7 @@ public class Preferences {
     public static void method6480(ClientAutoSetupResult arg0) {
         arg0.method15939(0);
         byte var2;
-        if (GameShell.field4152 >= 96) {
+        if (GameShell.maxHeapMemoryMb >= 96) {
             int var1 = CpuProfiling.method4552();
             if (var1 <= 100) {
                 method5717();
@@ -238,7 +238,7 @@ public class Preferences {
 
     @ObfuscatedName("og.n(I)V")
     public static void method7165() {
-        if (GameShell.field4144 > 1) {
+        if (GameShell.availableProcessors > 1) {
             client.options.method15448(client.options.cpuUsage, 4);
         } else {
             client.options.method15448(client.options.cpuUsage, 2);

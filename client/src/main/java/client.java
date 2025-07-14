@@ -1663,12 +1663,12 @@ public final class client extends GameShell {
             var1 = var1 + options.texturing.getValue() + " ";
             var1 = var1 + options.bloom.getValue() + " ";
             var1 = var1 + "0 ";
-            var1 = var1 + field4152 + " ";
+            var1 = var1 + maxHeapMemoryMb + " ";
             var1 = var1 + state + " ";
-            if (Statics.field2305 == null) {
+            if (Statics.hardwarePlatform == null) {
                 var1 = var1 + -1;
             } else {
-                var1 = var1 + Statics.field2305.field9703;
+                var1 = var1 + Statics.hardwarePlatform.cpuFeatures;
             }
             var1 = var1 + " ";
             if (gamepack == null) {
@@ -2079,7 +2079,7 @@ public final class client extends GameShell {
                         if (toolkit.method629()) {
                             boolean var10 = true;
                             try {
-                                var10 = Statics.field2305.field9703 > 256;
+                                var10 = Statics.hardwarePlatform.cpuFeatures > 256;
                             } catch (Throwable var26) {
                             }
                             Heap var12;
@@ -8099,7 +8099,7 @@ public final class client extends GameShell {
                 if (var428.length() == 0) {
                     var428 = var427;
                 }
-                if (!field8903 || Statics.field2247.startsWith("mac") || !Browser.method1814(var427, 1, JavascriptFunction.field3143.method4757())) {
+                if (!field8903 || Statics.osName.startsWith("mac") || !Browser.method1814(var427, 1, JavascriptFunction.field3143.method4757())) {
                     Browser.method3613(var428, true, options.toolkit.getValue() == 5, field8915, field9218);
                 }
             } else {

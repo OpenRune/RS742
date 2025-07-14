@@ -7,7 +7,7 @@ public class ClientOptions extends Node {
     public final ModeGame field9639;
 
     @ObfuscatedName("aeg.f")
-    public final ClientOptionsHardwareInfo field9638;
+    public final ClientOptionsHardwareInfo optionsHardwareInfo;
 
     @ObfuscatedName("aeg.d")
     public ClientOptionsAntiAliasing antialiasingDefault;
@@ -125,14 +125,14 @@ public class ClientOptions extends Node {
 
     public ClientOptions(ModeGame arg0, int arg1) {
         this.field9639 = arg0;
-        this.field9638 = new ClientOptionsHardwareInfo(GameShell.field4152, GameShell.field4144, Statics.field4150.toLowerCase().indexOf("arm") != -1);
+        this.optionsHardwareInfo = new ClientOptionsHardwareInfo(GameShell.maxHeapMemoryMb, GameShell.availableProcessors, Statics.osArch.toLowerCase().indexOf("arm") != -1);
         this.toolkit = new ClientOptionsDisplayMode(arg1, this);
         this.init(true);
     }
 
     public ClientOptions(Packet arg0, ModeGame arg1, int arg2) {
         this.field9639 = arg1;
-        this.field9638 = new ClientOptionsHardwareInfo(GameShell.field4152, GameShell.field4144, Statics.field4150.indexOf("arm") != -1);
+        this.optionsHardwareInfo = new ClientOptionsHardwareInfo(GameShell.maxHeapMemoryMb, GameShell.availableProcessors, Statics.osArch.indexOf("arm") != -1);
         this.toolkit = new ClientOptionsDisplayMode(arg2, this);
         this.method15443(arg0);
     }
@@ -532,6 +532,6 @@ public class ClientOptions extends Node {
 
     @ObfuscatedName("aeg.f(B)Ltr;")
     public ClientOptionsHardwareInfo method15462() {
-        return this.field9638;
+        return this.optionsHardwareInfo;
     }
 }

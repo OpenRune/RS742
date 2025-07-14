@@ -103,10 +103,10 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public boolean field4151 = false;
 
     @ObfuscatedName("nv.bf")
-    public static int field4152 = -1;
+    public static int maxHeapMemoryMb = -1;
 
     @ObfuscatedName("nv.bt")
-    public static int field4144 = 1;
+    public static int availableProcessors = 1;
 
     @ObfuscatedName("nv.bg")
     public boolean field4139 = false;
@@ -142,11 +142,11 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         Statics.field1597 = arg2;
         Statics.field10528 = arg4;
         Statics.field10530 = arg5;
-        Statics.field3788 = "Unknown";
-        Statics.field726 = "1.1";
+        Statics.javaVendorName = "Unknown";
+        Statics.javaVersion = "1.1";
         try {
-            Statics.field3788 = System.getProperty("java.vendor");
-            Statics.field726 = System.getProperty("java.version");
+            Statics.javaVendorName = System.getProperty("java.vendor");
+            Statics.javaVersion = System.getProperty("java.version");
         } catch (Exception var33) {
         }
         try {
@@ -154,16 +154,16 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         } catch (Exception var32) {
             Statics.field3501 = "Unknown";
         }
-        Statics.field2247 = Statics.field3501.toLowerCase();
+        Statics.osName = Statics.field3501.toLowerCase();
         try {
-            Statics.field4150 = System.getProperty("os.arch").toLowerCase();
+            Statics.osArch = System.getProperty("os.arch").toLowerCase();
         } catch (Exception var31) {
-            Statics.field4150 = "";
+            Statics.osArch = "";
         }
         try {
-            Statics.field862 = System.getProperty("os.version").toLowerCase();
+            Statics.osVersion = System.getProperty("os.version").toLowerCase();
         } catch (Exception var30) {
-            Statics.field862 = "";
+            Statics.osVersion = "";
         }
         try {
             Statics.field7436 = System.getProperty("user.home");
@@ -173,7 +173,7 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         } catch (Exception var29) {
         }
         try {
-            if (Statics.field2247.startsWith("win")) {
+            if (Statics.osName.startsWith("win")) {
                 if (Statics.field7436 == null) {
                     Statics.field7436 = System.getenv("USERPROFILE");
                 }
@@ -591,10 +591,10 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
 
     @ObfuscatedName("nv.i(I)V")
     public void run_inner() {
-        if (Statics.field3788 != null) {
-            String var1 = Statics.field3788.toLowerCase();
+        if (Statics.javaVendorName != null) {
+            String var1 = Statics.javaVendorName.toLowerCase();
             if (var1.indexOf("sun") != -1 || var1.indexOf("apple") != -1) {
-                String var2 = Statics.field726;
+                String var2 = Statics.javaVersion;
                 if (var2.equals("1.1") || var2.startsWith("1.1.") || var2.equals("1.2") || var2.startsWith("1.2.") || var2.equals("1.3") || var2.startsWith("1.3.") || var2.equals("1.4") || var2.startsWith("1.4.") || var2.equals("1.5") || var2.startsWith("1.5.") || var2.equals("1.6.0")) {
                     this.error("wrongjava");
                     return;
@@ -612,8 +612,8 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
             }
         }
         getTopContainer().setFocusCycleRoot(true);
-        field4152 = (int) (Runtime.getRuntime().maxMemory() / 1048576L) + 1;
-        field4144 = Runtime.getRuntime().availableProcessors();
+        maxHeapMemoryMb = (int) (Runtime.getRuntime().maxMemory() / 1048576L) + 1;
+        availableProcessors = Runtime.getRuntime().availableProcessors();
         this.addcanvas();
         this.maininit();
         Statics.field8481 = Timer.method4777();

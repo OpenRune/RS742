@@ -381,7 +381,7 @@ public class DeveloperConsole {
                 return;
             }
             if (arg0.equals("heap")) {
-                addLine("Heap: " + GameShell.field4152 + "MB");
+                addLine("Heap: " + GameShell.maxHeapMemoryMb + "MB");
                 return;
             }
             if (arg0.equalsIgnoreCase("getcamerapos")) {

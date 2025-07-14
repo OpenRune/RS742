@@ -464,8 +464,8 @@ public class LoginManager {
                     buf.p1(var15.pos);
                     buf.pdata(var15.data, 0, var15.pos);
                     client.preferencesChangeNotified = true;
-                    Packet var16 = new Packet(Statics.field2305.method15476());
-                    Statics.field2305.createHardwareBlock(var16);
+                    Packet var16 = new Packet(Statics.hardwarePlatform.getBlockLength());
+                    Statics.hardwarePlatform.createHardwareBlock(var16);
                     buf.pdata(var16.data, 0, var16.data.length);
                     buf.p4(client.currentIncrementVerifyId);
                     buf.p8(client.field8910);
@@ -515,8 +515,8 @@ public class LoginManager {
                     Packet var21 = client.options.createPreferencesBlock();
                     buf.p1(var21.pos);
                     buf.pdata(var21.data, 0, var21.pos);
-                    Packet var22 = new Packet(Statics.field2305.method15476());
-                    Statics.field2305.createHardwareBlock(var22);
+                    Packet var22 = new Packet(Statics.hardwarePlatform.getBlockLength());
+                    Statics.hardwarePlatform.createHardwareBlock(var22);
                     buf.pdata(var22.data, 0, var22.data.length);
                     buf.pjstr(Statics.field6817);
                     buf.p4(client.field9043);
