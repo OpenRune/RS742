@@ -11040,8 +11040,18 @@ public final class ScriptRunner {
         arg0.intStack[++arg0.isp - 1] = client.field8903 ? 1 : 0;
     }
 
+    public static boolean isRunningFromJar() {
+        String className = ScriptRunner.class.getName().replace('.', '/') + ".class";
+        String classPath = ScriptRunner.class.getClassLoader().getResource(className).toString();
+        return classPath.startsWith("jar:");
+    }
+
     @ObfuscatedName("ig.agh(Lrn;I)V")
     public static final void method4558(ClientScriptState arg0) {
+        if (!isRunningFromJar()) {
+            arg0.intStack[++arg0.isp - 1] = 1;
+            return;
+        }
         if (Statics.hardwarePlatform.javaVersionMajor < 6) {
             arg0.intStack[++arg0.isp - 1] = 0;
         } else if (Statics.hardwarePlatform.javaVersionMajor == 6 && Statics.hardwarePlatform.javaVersionPatch < 10) {
