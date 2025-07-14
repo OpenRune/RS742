@@ -11799,7 +11799,7 @@ public final class ScriptRunner {
 
     @ObfuscatedName("mz.ajo(Lrn;B)V")
     public static final void method6345(ClientScriptState arg0) {
-        arg0.intStack[++arg0.isp - 1] = LoginManager.enterLobbyReply;
+        arg0.intStack[++arg0.isp - 1] = !client.ENABLE_LOBBY ? LoginManager.enterGameReply : LoginManager.enterLobbyReply;
     }
 
     @ObfuscatedName("eu.ajc(Lrn;I)V")

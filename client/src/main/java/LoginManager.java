@@ -934,10 +934,14 @@ public class LoginManager {
 
     @ObfuscatedName("pz.y(II)V")
     public static void method7972(int arg0) {
-        if (Statics.field500 == 154) {
-            enterLobbyReply = arg0;
-        } else if (Statics.field500 == 223) {
+        if (!client.ENABLE_LOBBY) {
             enterGameReply = arg0;
+        } else {
+            if (Statics.field500 == 154) {
+                enterLobbyReply = arg0;
+            } else if (Statics.field500 == 223) {
+                enterGameReply = arg0;
+            }
         }
     }
 
