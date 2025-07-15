@@ -297,17 +297,12 @@ public class R317LoginHandler implements LoginHandler {
                 if (!Statics.connection.getStream().hasAvailable(1)) {
                     return;
                 }
-                Statics.connection.getStream().read(Statics.connection.in.data, 0, 1);
-                Statics.field8459 = Statics.connection.in.data[0] & 0xFF;
+                //Skip this as 317 does not send a size for the next part
                 LoginManager.loginState = 145;
                 return;
             }
             if (LoginManager.loginState == 145) {
                 PacketBit var31 = Statics.connection.in;
-                if (!Statics.connection.getStream().hasAvailable(1)) {
-                    return;
-                }
-
                 Statics.connection.getStream().read(var31.data, 0, 1);
                 var31.pos = 0;
                 client.userStaffModLevel = var31.g1();
@@ -355,7 +350,7 @@ public class R317LoginHandler implements LoginHandler {
                     Statics.connection.packetType = null;
                     return;
                 }
-                LoginManager.loginState = 166;
+                LoginManager.loginState = 153;
             }
             if (LoginManager.loginState == 166) {
                 if (!Statics.connection.getStream().hasAvailable(3)) {
@@ -378,29 +373,24 @@ public class R317LoginHandler implements LoginHandler {
                 LoginManager.loginState = 153;
             }
             if (LoginManager.loginState == 153) {
-                if (!Statics.connection.getStream().hasAvailable(Statics.connection.packetSize)) {
-                    return;
-                }
-                Statics.connection.getStream().read(Statics.connection.in.data, 0, Statics.connection.packetSize);
-                Statics.connection.in.pos = 0;
-                int var37 = Statics.connection.packetSize;
+
                 LoginManager.loginState = 7;
                 LoginManager.method7972(2);
                 LoginManager.method3965();
-                ReceivePlayerPositions.method12667(Statics.connection.in);
-                int var38 = var37 - Statics.connection.in.pos;
-                PacketBit var39 = new PacketBit(var38);
-                System.arraycopy(Statics.connection.in.data, Statics.connection.in.pos, var39.data, 0, var38);
-                Statics.connection.in.pos += var38;
-                if (ServerProt.REBUILD_REGION == Statics.connection.packetType) {
-                    client.world.method6135(new RebuildRequest(RebuildType.REBUILD_REGION, var39));
-                } else {
-                    client.world.method6135(new RebuildRequest(RebuildType.REBUILD_NORMAL, var39));
-                }
-                if (Statics.connection.in.pos != var37) {
-                    throw new RuntimeException(Statics.connection.in.pos + " " + var37);
-                }
-                Statics.connection.packetType = null;
+                //ReceivePlayerPositions.method12667(Statics.connection.in);
+//                int var38 = var37 - Statics.connection.in.pos;
+//                PacketBit var39 = new PacketBit(var38);
+//                System.arraycopy(Statics.connection.in.data, Statics.connection.in.pos, var39.data, 0, var38);
+//                Statics.connection.in.pos += var38;
+//                if (ServerProt.REBUILD_REGION == Statics.connection.packetType) {
+//                    client.world.method6135(new RebuildRequest(RebuildType.REBUILD_REGION, var39));
+//                } else {
+//                    client.world.method6135(new RebuildRequest(RebuildType.REBUILD_NORMAL, var39));
+//                }
+//                if (Statics.connection.in.pos != var37) {
+//                    throw new RuntimeException(Statics.connection.in.pos + " " + var37);
+//                }
+//                Statics.connection.packetType = null;
                 return;
             }
             if (LoginManager.loginState == 197) {

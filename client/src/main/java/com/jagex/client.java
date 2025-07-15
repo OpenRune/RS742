@@ -1420,6 +1420,7 @@ public final class client extends GameShell {
         if (DeveloperConsole.method14925()) {
             DeveloperConsole.method12621();
         }
+
         if (isStateLoading(state)) {
             Loading.method12645();
             GameShell.method2427();
@@ -2909,6 +2910,7 @@ public final class client extends GameShell {
 
     @ObfuscatedName("nk.gs(I)V")
     public static final void updateGame() {
+        System.out.println("IN GAME");
         if (systemUpdateTimer > 1) {
             systemUpdateTimer--;
             miscTransmitNum = interfaceUpdateNum;
@@ -6444,6 +6446,7 @@ public final class client extends GameShell {
     public static final boolean handleServerProt(ServerConnection conn) throws IOException {
         Stream stream = conn.getStream();
         PacketBit buf = conn.in;
+        System.out.println("Incoming Packet");
         if (stream == null) {
             return false;
         }
