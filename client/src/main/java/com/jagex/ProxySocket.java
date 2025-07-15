@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 import java.net.*;
 import java.net.Proxy.Type;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 @ObfuscatedName("agm")
@@ -33,8 +34,12 @@ public class ProxySocket extends AbstractSocket {
         } catch (URISyntaxException var17) {
             return this.method12147();
         }
-        var3.addAll(var4);
-        Object[] var6 = var3.toArray();
+
+        // Fix: copy into a new mutable list before adding
+        List combinedProxies = new ArrayList(var3);
+        combinedProxies.addAll(var4);
+
+        Object[] var6 = combinedProxies.toArray();
         ProxyAuthenticationRequiredException var7 = null;
         Object[] var8 = var6;
         for (int var9 = 0; var9 < var8.length; var9++) {
@@ -48,6 +53,7 @@ public class ProxySocket extends AbstractSocket {
             } catch (ProxyAuthenticationRequiredException var15) {
                 var7 = var15;
             } catch (IOException var16) {
+                // Ignored
             }
         }
         if (var7 != null) {
