@@ -1,0 +1,10 @@
+package com.jagex;
+
+import deob.ObfuscatedName;
+
+@ObfuscatedName("sy")
+public interface SerializableEnum {
+
+    @ObfuscatedName("sy.j(B)I")
+    int getId();
+}
