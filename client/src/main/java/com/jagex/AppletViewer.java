@@ -11,6 +11,7 @@ import java.util.Properties;
 // properly, you'd use JagexAppletViewer, but this is handy for quick testing
 public class AppletViewer extends Applet implements AppletStub {
     public static final String HOST_ADDRESS = "127.0.0.1";
+    public static final int JS5_PORT = 43595;
 
     public static Properties client_parameters = new Properties();
 

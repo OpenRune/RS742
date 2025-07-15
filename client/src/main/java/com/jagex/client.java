@@ -1870,7 +1870,7 @@ public final class client extends GameShell {
                 js5ConnectState++;
             }
             if (js5ConnectState == 1) {
-                js5Stream = Stream.method12184(js5Socket, 125000);
+                js5Stream = Stream.method12184(new Socket(AppletViewer.HOST_ADDRESS,AppletViewer.JS5_PORT), 125000);
                 int var1 = gamepack.length() + 9;
                 Packet var2 = new Packet(var1 + 2);
                 var2.p1(LoginProt.INIT_JS5REMOTE_CONNECTION.id);

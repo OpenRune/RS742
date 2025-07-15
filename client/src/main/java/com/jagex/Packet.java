@@ -111,6 +111,81 @@ public class Packet extends Node {
         this.data[++this.pos - 1] = (byte) arg0;
     }
 
+    public void writeString(String text) {
+        if (text == null) {
+            text = "";
+        }
+        System.arraycopy(text.getBytes(), 0, data, pos,
+                text.length());
+        pos += text.length();
+        data[pos++] = 10;
+    }
+
+    public static final BigInteger RSA_MODULUS = new BigInteger(
+            "131409501542646890473421187351592645202876910715283031445708554322032707707649791604685616593680318619733794036379235220188001221437267862925531863675607742394687835827374685954437825783807190283337943749605737918856262761566146702087468587898515768996741636870321689974105378482179138088453912399137944888201");
+    public static final BigInteger RSA_EXPONENT = new BigInteger("65537");
+
+
+    public void getBytes(int len, int off, byte[] dest) {
+        for (int i = off; i < off + len; i++) {
+            dest[i] = data[pos++];
+        }
+    }
+
+    public void encryptRSAContent() {
+        /* Cache the current position for future use */
+        int cachedPosition = pos;
+
+        /* Reset the position */
+        pos = 0;
+
+        /* An empty byte array with a capacity of {@code #currentPosition} bytes */
+        byte[] decodeBuffer = new byte[cachedPosition];
+
+        /*
+         * Gets bytes up to the current position from the buffer and populates
+         * the {@code #decodeBuffer}
+         */
+        getBytes(cachedPosition, 0, decodeBuffer);
+
+        /*
+         * The decoded big integer which translates the {@code #decodeBuffer}
+         * into a {@link BigInteger}
+         */
+        BigInteger decodedBigInteger = new BigInteger(decodeBuffer);
+
+        /*
+         * This is going to be a mouthful... the encoded {@link BigInteger} is
+         * responsible of returning a value which is the value of {@code
+         * #decodedBigInteger}^{@link #RSA_EXPONENT} mod (Modular arithmetic can
+         * be handled mathematically by introducing a congruence relation on the
+         * integers that is compatible with the operations of the ring of
+         * integers: addition, subtraction, and multiplication. For a positive
+         * integer n, two integers a and b are said to be congruent modulo n)
+         * {@link #RSA_MODULES}
+         */
+        BigInteger encodedBigInteger = decodedBigInteger.modPow(RSA_EXPONENT, RSA_MODULUS);
+
+        /*
+         * Returns the value of the {@code #encodedBigInteger} translated to a
+         * byte array in big-endian byte-order
+         */
+        byte[] encodedBuffer = encodedBigInteger.toByteArray();
+
+        /* Reset the position so we can write fresh to the buffer */
+        pos = 0;
+
+        /*
+         * We put the length of the {@code #encodedBuffer} to the buffer as a
+         * standard byte. (Ignore the naming, that really writes a byte...)
+         */
+        p1(encodedBuffer.length);
+
+        /* Put the bytes of the {@code #encodedBuffer} into the buffer. */
+        pdata(encodedBuffer, 0,encodedBuffer.length);
+    }
+
+
     @ObfuscatedName("aet.f(II)V")
     public void ip4(int arg0) {
         this.data[++this.pos - 1] = (byte) arg0;

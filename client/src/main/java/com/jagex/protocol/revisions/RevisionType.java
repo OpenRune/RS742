@@ -1,10 +1,12 @@
 package com.jagex.protocol.revisions;
 
 import com.jagex.protocol.revisions.handlers.LoginHandler;
+import com.jagex.protocol.revisions.impl.r317.R317LoginHandler;
 import com.jagex.protocol.revisions.impl.r742.R742LoginHandler;
 
 public enum RevisionType {
-    REV_742(new R742LoginHandler());
+    REV_742(new R742LoginHandler()),
+    REV_317(new R317LoginHandler());
 
     private final LoginHandler loginHandler;
 
