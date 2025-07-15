@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("xv")
 public class GlEffectRelated2 extends GlEffect {

@@ -1,8 +1,8 @@
 import deob.ObfuscatedName;
-import jagdx.IDirect3DDevice;
-import jagdx.IDirect3DVertexBuffer;
-import jagdx.IUnknown;
-import jagdx.HRESULT;
+import com.jagex.libs.jagdx.IDirect3DDevice;
+import com.jagex.libs.jagdx.IDirect3DVertexBuffer;
+import com.jagex.libs.jagdx.IUnknown;
+import com.jagex.libs.jagdx.HRESULT;
 
 @ObfuscatedName("jk")
 public class DxVertexBuffer implements VertexBuffer {

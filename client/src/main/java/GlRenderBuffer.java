@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("bh")
 public class GlRenderBuffer implements GlRelated5 {

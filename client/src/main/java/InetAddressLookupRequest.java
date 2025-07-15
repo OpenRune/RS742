@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.ping.Ping;
+import com.jagex.libs.jaclib.ping.Ping;
 
 import java.net.InetAddress;
 import java.util.LinkedList;

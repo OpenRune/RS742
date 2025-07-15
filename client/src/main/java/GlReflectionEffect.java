@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("xw")
 public class GlReflectionEffect extends GlEffect {

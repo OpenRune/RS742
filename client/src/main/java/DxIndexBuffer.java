@@ -1,8 +1,8 @@
 import deob.ObfuscatedName;
-import jagdx.IDirect3DDevice;
-import jagdx.IDirect3DIndexBuffer;
-import jagdx.IUnknown;
-import jagdx.HRESULT;
+import com.jagex.libs.jagdx.IDirect3DDevice;
+import com.jagex.libs.jagdx.IDirect3DIndexBuffer;
+import com.jagex.libs.jagdx.IUnknown;
+import com.jagex.libs.jagdx.HRESULT;
 
 @ObfuscatedName("jg")
 public class DxIndexBuffer implements IndexBuffer {

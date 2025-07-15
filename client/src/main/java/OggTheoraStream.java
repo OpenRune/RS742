@@ -1,7 +1,7 @@
 import deob.ObfuscatedName;
-import jagtheora.ogg.OggPacket;
-import jagtheora.ogg.OggStreamState;
-import jagtheora.theora.*;
+import com.jagex.libs.jagtheora.ogg.OggPacket;
+import com.jagex.libs.jagtheora.ogg.OggStreamState;
+import com.jagex.libs.jagtheora.theora.*;
 
 @ObfuscatedName("ajv")
 public class OggTheoraStream extends OggStream {

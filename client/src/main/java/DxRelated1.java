@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jagdx.IDirect3DTexture;
-import jagdx.IUnknown;
+import com.jagex.libs.jagdx.IDirect3DTexture;
+import com.jagex.libs.jagdx.IUnknown;
 
 @ObfuscatedName("jn")
 public class DxRelated1 implements DxGraphicsDeletable, FrameBufferInterface {

@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.hardware_info.HardwareInfo;
+import com.jagex.libs.jaclib.hardware_info.HardwareInfo;
 
 import java.util.HashMap;
 

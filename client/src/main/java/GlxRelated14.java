@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("lx")
 public class GlxRelated14 implements GraphicsDeletable, EffectInterface, GlxRelated5 {

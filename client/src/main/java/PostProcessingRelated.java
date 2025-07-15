@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("xc")
 public class PostProcessingRelated extends SecondaryNode implements GlRelated5 {

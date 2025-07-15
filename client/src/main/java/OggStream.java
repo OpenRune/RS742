@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jagtheora.ogg.OggPacket;
-import jagtheora.ogg.OggStreamState;
+import com.jagex.libs.jagtheora.ogg.OggPacket;
+import com.jagex.libs.jagtheora.ogg.OggStreamState;
 
 @ObfuscatedName("adp")
 public abstract class OggStream extends Node {

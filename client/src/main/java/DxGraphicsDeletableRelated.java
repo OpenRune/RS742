@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jagdx.IDirect3DDevice;
-import jagdx.IUnknown;
+import com.jagex.libs.jagdx.IDirect3DDevice;
+import com.jagex.libs.jagdx.IUnknown;
 
 @ObfuscatedName("jb")
 public class DxGraphicsDeletableRelated implements DxGraphicsDeletable {

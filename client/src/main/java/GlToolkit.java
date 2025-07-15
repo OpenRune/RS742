@@ -1,8 +1,8 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Buffer;
-import jaclib.memory.Stream;
-import jaclib.memory.heap.NativeHeap;
-import jaggl.OpenGL;
+import com.jagex.libs.jaclib.memory.Buffer;
+import com.jagex.libs.jaclib.memory.Stream;
+import com.jagex.libs.jaclib.memory.heap.NativeHeap;
+import com.jagex.libs.jaggl.OpenGL;
 
 import java.awt.*;
 

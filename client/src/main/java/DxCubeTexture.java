@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jagdx.IDirect3DCubeTexture;
-import jagdx.IDirect3DDevice;
+import com.jagex.libs.jagdx.IDirect3DCubeTexture;
+import com.jagex.libs.jagdx.IDirect3DDevice;
 
 import java.nio.ByteBuffer;
 

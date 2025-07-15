@@ -1,7 +1,7 @@
 import deob.ObfuscatedName;
-import jagdx.IDirect3DDevice;
-import jagdx.IUnknown;
-import jagdx.HRESULT;
+import com.jagex.libs.jagdx.IDirect3DDevice;
+import com.jagex.libs.jagdx.IUnknown;
+import com.jagex.libs.jagdx.HRESULT;
 
 @ObfuscatedName("akh")
 public class DxFramebuffer extends GpuFramebuffer {

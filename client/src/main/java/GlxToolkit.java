@@ -1,7 +1,7 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Stream;
-import jaggl.MapBuffer;
-import jaggl.OpenGL;
+import com.jagex.libs.jaclib.memory.Stream;
+import com.jagex.libs.jaggl.MapBuffer;
+import com.jagex.libs.jaggl.OpenGL;
 
 import java.awt.*;
 

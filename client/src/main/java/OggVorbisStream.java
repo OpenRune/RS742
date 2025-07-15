@@ -1,10 +1,10 @@
 import deob.ObfuscatedName;
-import jagtheora.ogg.OggPacket;
-import jagtheora.ogg.OggStreamState;
-import jagtheora.vorbis.DSPState;
-import jagtheora.vorbis.VorbisBlock;
-import jagtheora.vorbis.VorbisComment;
-import jagtheora.vorbis.VorbisInfo;
+import com.jagex.libs.jagtheora.ogg.OggPacket;
+import com.jagex.libs.jagtheora.ogg.OggStreamState;
+import com.jagex.libs.jagtheora.vorbis.DSPState;
+import com.jagex.libs.jagtheora.vorbis.VorbisBlock;
+import com.jagex.libs.jagtheora.vorbis.VorbisComment;
+import com.jagex.libs.jagtheora.vorbis.VorbisInfo;
 
 @ObfuscatedName("ajp")
 public class OggVorbisStream extends OggStream {

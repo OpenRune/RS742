@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("abl")
 public class GlxTexture2 extends GlxBaseTexture implements GpuTextureRelated1 {

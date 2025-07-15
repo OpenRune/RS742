@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.nanotime.QueryPerformanceCounter;
+import com.jagex.libs.jaclib.nanotime.QueryPerformanceCounter;
 
 @ObfuscatedName("acc")
 public class MillisTimer extends Timer {

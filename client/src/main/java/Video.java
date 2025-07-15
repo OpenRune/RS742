@@ -1,8 +1,8 @@
 import deob.ObfuscatedName;
-import jagtheora.ogg.OggPacket;
-import jagtheora.ogg.OggPage;
-import jagtheora.ogg.OggStreamState;
-import jagtheora.ogg.OggSyncState;
+import com.jagex.libs.jagtheora.ogg.OggPacket;
+import com.jagex.libs.jagtheora.ogg.OggPage;
+import com.jagex.libs.jagtheora.ogg.OggStreamState;
+import com.jagex.libs.jagtheora.ogg.OggSyncState;
 
 import java.io.IOException;
 

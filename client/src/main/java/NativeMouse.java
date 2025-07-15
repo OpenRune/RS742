@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.ping.IcmpService;
+import com.jagex.libs.jaclib.ping.IcmpService;
 
 import java.util.ArrayList;
 import java.util.Iterator;

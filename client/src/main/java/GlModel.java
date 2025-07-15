@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Stream;
-import jaggl.OpenGL;
+import com.jagex.libs.jaclib.memory.Stream;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("yz")
 public class GlModel extends Model {

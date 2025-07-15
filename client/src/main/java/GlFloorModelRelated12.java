@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Buffer;
+import com.jagex.libs.jaclib.memory.Buffer;
 
 @ObfuscatedName("xg")
 public class GlFloorModelRelated12 extends GlFloorModelRelated5 implements GlInterfaceRelated {

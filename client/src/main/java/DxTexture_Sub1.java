@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jagdx.*;
+import com.jagex.libs.jagdx.*;
 
 @ObfuscatedName("abw")
 public class DxTexture_Sub1 extends DxTexture implements GpuTextureRelated1 {

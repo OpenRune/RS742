@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jagdx.*;
+import com.jagex.libs.jagdx.*;
 
 import java.awt.*;
 

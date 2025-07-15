@@ -1,7 +1,7 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Stream;
-import jaclib.memory.heap.NativeHeapBuffer;
-import jaggl.OpenGL;
+import com.jagex.libs.jaclib.memory.Stream;
+import com.jagex.libs.jaclib.memory.heap.NativeHeapBuffer;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("yj")
 public class GlFloorModel extends FloorModel {

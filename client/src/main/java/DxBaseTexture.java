@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jagdx.IUnknown;
+import com.jagex.libs.jagdx.IUnknown;
 
 @ObfuscatedName("jq")
 public abstract class DxBaseTexture implements DeletableResource {

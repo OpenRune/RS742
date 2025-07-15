@@ -1,8 +1,8 @@
 import deob.ObfuscatedName;
-import jaclib.memory.DirectBufferHelper;
-import jaclib.memory.Stream;
-import jaclib.memory.heap.NativeHeap;
-import jaclib.memory.heap.NativeHeapBuffer;
+import com.jagex.libs.jaclib.memory.DirectBufferHelper;
+import com.jagex.libs.jaclib.memory.Stream;
+import com.jagex.libs.jaclib.memory.heap.NativeHeap;
+import com.jagex.libs.jaclib.memory.heap.NativeHeapBuffer;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;

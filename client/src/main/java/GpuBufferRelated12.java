@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Buffer;
+import com.jagex.libs.jaclib.memory.Buffer;
 
 @ObfuscatedName("xi")
 public class GpuBufferRelated12 extends GlBufferRelated1 implements GlInterfaceRelated {

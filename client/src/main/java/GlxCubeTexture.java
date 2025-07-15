@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("abk")
 public class GlxCubeTexture extends GlxBaseTexture implements GpuCubeTexture {

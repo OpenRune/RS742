@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaggl.OpenGL;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("ahy")
 public class GlEnvironmentSampler_Sub1 extends GlEnvironmentSampler {

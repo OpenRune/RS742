@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jaclib.memory.Buffer;
-import jaggl.OpenGL;
+import com.jagex.libs.jaclib.memory.Buffer;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("bw")
 public abstract class GlBufferRelated1 {

@@ -1,6 +1,6 @@
 import deob.ObfuscatedName;
-import jaclib.memory.heap.NativeHeapBuffer;
-import jaggl.OpenGL;
+import com.jagex.libs.jaclib.memory.heap.NativeHeapBuffer;
+import com.jagex.libs.jaggl.OpenGL;
 
 @ObfuscatedName("lj")
 public abstract class GlxBuffer implements GpuBuffer {

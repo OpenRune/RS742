@@ -1,5 +1,5 @@
 import deob.ObfuscatedName;
-import jaclib.memory.heap.NativeHeap;
+import com.jagex.libs.jaclib.memory.heap.NativeHeap;
 
 @ObfuscatedName("ahb")
 public class GlHeap extends Heap {
