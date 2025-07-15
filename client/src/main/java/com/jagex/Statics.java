@@ -1,5 +1,6 @@
 package com.jagex;
 
+import com.jagex.protocol.LoginManager;
 import deob.ObfuscatedName;
 
 import java.applet.Applet;
