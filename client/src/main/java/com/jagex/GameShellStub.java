@@ -12,8 +12,6 @@ public interface GameShellStub {
 
     void start();
 
-    void supplyApplet(Applet arg0);
-
     void destroy();
 
     void update(Graphics arg0);

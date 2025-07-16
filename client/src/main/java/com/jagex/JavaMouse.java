@@ -7,6 +7,8 @@ import java.awt.event.*;
 @ObfuscatedName("aeo")
 public class JavaMouse extends Mouse implements MouseListener, MouseMotionListener, MouseWheelListener {
 
+    private int isInEvent;
+
     @ObfuscatedName("aeo.s")
     public int field9787;
 
@@ -132,13 +134,25 @@ public class JavaMouse extends Mouse implements MouseListener, MouseMotionListen
     }
 
     public synchronized void mouseClicked(MouseEvent arg0) {
-        if (arg0.isPopupTrigger()) {
-            arg0.consume();
+        MouseEvent event = client.instance.getCallbacks().mouseClicked(arg0);
+        if (event.isPopupTrigger()) {
+            event.consume();
         }
     }
 
     public synchronized void mouseEntered(MouseEvent arg0) {
-        this.method15598(arg0.getX(), arg0.getY());
+        MouseEvent mouseEvent = arg0;
+        if (isInEvent == 0) {
+            mouseEvent = client.instance.getCallbacks().mouseEntered(mouseEvent);
+        }
+        if (!mouseEvent.isConsumed()) {
+            isInEvent++;
+            try {
+                this.method15598(mouseEvent.getX(), mouseEvent.getY());
+            } finally {
+                isInEvent--;
+            }
+        }
     }
 
     public synchronized void mouseExited(MouseEvent arg0) {
@@ -159,46 +173,90 @@ public class JavaMouse extends Mouse implements MouseListener, MouseMotionListen
     }
 
     public synchronized void mousePressed(MouseEvent arg0) {
-        int var2 = this.method15599(arg0);
-        if (var2 == 1) {
-            this.method15595(0, arg0.getX(), arg0.getY(), arg0.getClickCount());
-        } else if (var2 == 4) {
-            this.method15595(2, arg0.getX(), arg0.getY(), arg0.getClickCount());
-        } else if (var2 == 2) {
-            this.method15595(1, arg0.getX(), arg0.getY(), arg0.getClickCount());
+        MouseEvent mouseEvent = arg0;
+        if (isInEvent == 0) {
+            mouseEvent = client.instance.getCallbacks().mousePressed(mouseEvent);
         }
-        this.field9789 |= var2;
-        if (arg0.isPopupTrigger()) {
-            arg0.consume();
+        if (!mouseEvent.isConsumed()) {
+            isInEvent++;
+            try {
+                int var2 = this.method15599(arg0);
+                if (var2 == 1) {
+                    this.method15595(0, mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getClickCount());
+                } else if (var2 == 4) {
+                    this.method15595(2, mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getClickCount());
+                } else if (var2 == 2) {
+                    this.method15595(1, mouseEvent.getX(), mouseEvent.getY(), mouseEvent.getClickCount());
+                }
+                this.field9789 |= var2;
+                if (mouseEvent.isPopupTrigger()) {
+                    mouseEvent.consume();
+                }
+            } finally {
+                isInEvent--;
+            }
         }
     }
 
     public synchronized void mouseReleased(MouseEvent arg0) {
-        int var2 = this.method15599(arg0);
-        if ((this.field9789 & var2) == 0) {
-            var2 = this.field9789;
+        MouseEvent mouseEvent = arg0;
+        if (isInEvent == 0) {
+            mouseEvent = client.instance.getCallbacks().mouseReleased(mouseEvent);
         }
-        if ((var2 & 0x1) != 0) {
-            this.method15595(3, arg0.getX(), arg0.getY(), arg0.getClickCount());
-        }
-        if ((var2 & 0x4) != 0) {
-            this.method15595(5, arg0.getX(), arg0.getY(), arg0.getClickCount());
-        }
-        if ((var2 & 0x2) != 0) {
-            this.method15595(4, arg0.getX(), arg0.getY(), arg0.getClickCount());
-        }
-        this.field9789 &= ~var2;
-        if (arg0.isPopupTrigger()) {
-            arg0.consume();
+        if (!mouseEvent.isConsumed()) {
+            isInEvent++;
+            try {
+                int var2 = this.method15599(arg0);
+                if ((this.field9789 & var2) == 0) {
+                    var2 = this.field9789;
+                }
+                if ((var2 & 0x1) != 0) {
+                    this.method15595(3, mouseEvent.getX(), arg0.getY(), mouseEvent.getClickCount());
+                }
+                if ((var2 & 0x4) != 0) {
+                    this.method15595(5, mouseEvent.getX(), arg0.getY(), mouseEvent.getClickCount());
+                }
+                if ((var2 & 0x2) != 0) {
+                    this.method15595(4, mouseEvent.getX(), arg0.getY(), mouseEvent.getClickCount());
+                }
+                this.field9789 &= ~var2;
+                if (mouseEvent.isPopupTrigger()) {
+                    mouseEvent.consume();
+                }
+            } finally {
+                isInEvent--;
+            }
         }
     }
 
     public synchronized void mouseDragged(MouseEvent arg0) {
-        this.method15598(arg0.getX(), arg0.getY());
+        MouseEvent mouseEvent = arg0;
+        if (isInEvent == 0) {
+            mouseEvent = client.instance.getCallbacks().mouseDragged(mouseEvent);
+        }
+        if (!mouseEvent.isConsumed()) {
+            isInEvent++;
+            try {
+                this.method15598(mouseEvent.getX(), mouseEvent.getY());
+            } finally {
+                isInEvent--;
+            }
+        }
     }
 
     public synchronized void mouseMoved(MouseEvent arg0) {
-        this.method15598(arg0.getX(), arg0.getY());
+        MouseEvent mouseEvent = arg0;
+        if (isInEvent == 0) {
+            mouseEvent = client.instance.getCallbacks().mouseMoved(mouseEvent);
+        }
+        if (!mouseEvent.isConsumed()) {
+            isInEvent++;
+            try {
+                this.method15598(mouseEvent.getX(), mouseEvent.getY());
+            } finally {
+                isInEvent--;
+            }
+        }
     }
 
     public synchronized void mouseWheelMoved(MouseWheelEvent arg0) {

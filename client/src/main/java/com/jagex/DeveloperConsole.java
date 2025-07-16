@@ -669,7 +669,7 @@ public class DeveloperConsole {
                 } else if (arg0 == 11) {
                     GameShell.canvas.setLocation(50, 50);
                 } else if (arg0 == 17) {
-                    GameShell.canvas.setLocation(GameShell.leftMargin, GameShell.topMargin);
+                    GameShell.canvas.setLocation(GameShell.canvasX, GameShell.canvasY);
                 } else if (arg0 == 8) {
                     method1623();
                 } else if (arg0 == 28) {

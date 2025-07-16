@@ -57,27 +57,14 @@ public class AppletViewer extends Applet implements AppletStub {
         client_parameters.put("haveie6", "false");
     }
 
-    public static void main(String[] args) {
-        AppletViewer applet = new AppletViewer();
-        applet.start();
-    }
-
     public void start() {
         try {
-            JFrame frame = new JFrame("RuneScape");
-            frame.add(this);
-            frame.setVisible(true);
-            frame.setSize(1280, 720);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-            frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
-            frame.toFront();
-
-            client cl = new client();
-            cl.supplyApplet(this);
-            cl.init();
-            cl.start();
+            System.out.println("HEREE");
+            client.instance = new client();
+            client.instance.supplyApplet(this);
+            //client.instance.init();
+            client.instance.start();
         } catch (Exception e) {
             e.printStackTrace();
         }

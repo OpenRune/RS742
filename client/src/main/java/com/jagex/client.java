@@ -3,6 +3,12 @@ package com.jagex;
 import com.jagex.protocol.LoginManager;
 import deob.ObfuscatedName;
 import com.jagex.libs.jaclib.ping.Ping;
+import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.*;
+import net.runelite.api.Point;
+import net.runelite.api.events.ResizeableChanged;
+import net.runelite.api.hooks.Callbacks;
+import org.slf4j.Logger;
 
 import java.awt.*;
 import java.io.IOException;
@@ -10,10 +16,97 @@ import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URL;
 import java.util.*;
 
-public final class client extends GameShell {
+@Slf4j
+public final class client extends GameShell implements Client {
+
+    public static final String HOST_ADDRESS = "127.0.0.1";
+
+    public static Properties client_parameters = new Properties();
+
+    static {
+        client_parameters.put("separate_jvm", "true");
+        client_parameters.put("image", "http://www.runescape.com/img/game/splash2.gif");
+        client_parameters.put("centerimage", "true");
+        client_parameters.put("boxborder", "false");
+        client_parameters.put("java_arguments", "-Xmx256m -Xss2m -Dsun.java2d.noddraw=true -XX:CompileThreshold=1500 -Xincgc -XX:+UseConcMarkSweepGC -XX:+UseParNewGC");
+        client_parameters.put("boxbgcolor", "black");
+        client_parameters.put("5", "true,false,0,43,200,18,0,21,354,-15,Verdana,11,0xF4ECE9,candy_bar_middle.gif,candy_bar_back.gif,candy_bar_outline_left.gif,candy_bar_outline_right.gif,candy_bar_outline_top.gif,candy_bar_outline_bottom.gif,loadbar_body_left.gif,loadbar_body_right.gif,loadbar_body_fill.gif,6");
+        client_parameters.put("11", "0");
+        client_parameters.put("34", "225");
+        client_parameters.put("30", "kDq8qQ5dc2UY/tpjDzAzUpWhZDBsFrc4");
+        client_parameters.put("9", "false");
+        client_parameters.put("32", "7E38D137C0C97EAC1B89C07E1823D93B92621D5FF287F27135B71ECF61D4B07BDF4D957CA0C90F16707EE156B23C4365");
+        client_parameters.put("25", "false");
+        client_parameters.put("0", "gBY1FFD2PtHXiWDimCyWmg");
+        client_parameters.put("12", "false");
+        client_parameters.put("21", "true");
+        client_parameters.put("28", "t6VmPGef1q2SfGVu5*Boi1FauurdIIXIIXzRjGVy4Yo");
+        client_parameters.put("7", "0");
+        client_parameters.put("35", "0");
+        client_parameters.put("24", "");
+        client_parameters.put("-1", "7KYq*VzZDycfkn7KXq98Xg");
+        client_parameters.put("23", "");
+        client_parameters.put("1", "410601069");
+        client_parameters.put("13", "0");
+        client_parameters.put("29", "");
+        client_parameters.put("18", "1");
+        client_parameters.put("6", "28348");
+        client_parameters.put("26", "true");
+        client_parameters.put("10", HOST_ADDRESS);
+        client_parameters.put("4", "");
+        client_parameters.put("33", "0");
+        client_parameters.put("3", ".runescape.com");
+        client_parameters.put("16", "0");
+        client_parameters.put("15", "false");
+        client_parameters.put("8", "1107");
+        client_parameters.put("14", "false");
+        client_parameters.put("20", "0");
+        client_parameters.put("27", "false");
+        client_parameters.put("2", "");
+        client_parameters.put("haveie6", "false");
+    }
+
+    public void init() {
+        try {
+            System.out.println();
+            client.instance = new client();
+            supplyApplet(this);
+            startUp();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void appletResize(int dimensionX, int dimensionY) {
+        super.resize(new Dimension(dimensionX, dimensionY));
+    }
+
+    @Override
+    public String getParameter(String paramName) {
+        return (String) client_parameters.get(paramName);
+    }
+
+    @Override
+    public URL getDocumentBase() {
+        return this.getCodeBase();
+    }
+
+    @Override
+    public URL getCodeBase() {
+        try {
+            return new URL("http://" + HOST_ADDRESS);
+        } catch (MalformedURLException ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
 
     public static final int REVISION = 742;
     public static final int SUBREVISION = 1; // existing servers probably expect 742-2!
@@ -1054,7 +1147,7 @@ public final class client extends GameShell {
         return arg0 == 12 || arg0 == 2 || arg0 == 10;
     }
 
-    public final void init() {
+    public final void startUp() {
         if (!this.method6660()) {
             return;
         }
@@ -1243,6 +1336,8 @@ public final class client extends GameShell {
         this.method6717(var6, modeGame.field6404, var7, var8, Statics.method15963(), 742, 1, field8918);
     }
 
+    static client instance;
+
     @ObfuscatedName("client.af(B)V")
     public final void maininit() {
         Frame var1 = new Frame(" ");
@@ -1250,6 +1345,7 @@ public final class client extends GameShell {
         var1.dispose();
         Statics.field9561 = new Component();
         method13896();
+        instance = this;
         Statics.field1210 = new Js5DiskCache();
         js5TcpClient = new ClientJs5TcpClient();
         int[] var2 = new int[]{20, 260};
@@ -1492,7 +1588,7 @@ public final class client extends GameShell {
         if (method6478(state)) {
             if (windowModeChangeTime != 0L && MonotonicTime.get() > windowModeChangeTime) {
                 setWindowMode(getWindowMode(), -1, -1, false);
-            } else if (!toolkit.method447() && field4131) {
+            } else if (!toolkit.method447() && isCanvasInvalid) {
                 method2867();
             }
         }
@@ -1520,8 +1616,8 @@ public final class client extends GameShell {
             setWindowMode(options.maxScreenSize.getValue(), -1, -1, false);
         }
         boolean var8 = false;
-        if (fullredraw) {
-            fullredraw = false;
+        if (fullRedraw) {
+            fullRedraw = false;
             var8 = true;
         }
         if (var8) {
@@ -2195,6 +2291,10 @@ public final class client extends GameShell {
 
     @ObfuscatedName("sd.fb(I)V")
     public static void method11119() {
+        if (instance != null && instance.isGpu()) {
+            instance.setFullRedraw(false);
+            return;
+        }
         Statics.keyboard.method7233();
         Statics.mouse.method7257();
         field1543.addcanvas();
@@ -2210,6 +2310,7 @@ public final class client extends GameShell {
             toolkit.method461(GameShell.canvas);
             method11119();
             Dimension var0 = GameShell.canvas.getSize();
+
             toolkit.method459(GameShell.canvas, var0.width, var0.height);
             toolkit.method462(GameShell.canvas);
         } else {
@@ -2289,6 +2390,7 @@ public final class client extends GameShell {
         if (!toolkit.method448()) {
             arg3 = true;
         }
+
         method3588(var4, arg0, arg1, arg2, arg3);
     }
 
@@ -2332,9 +2434,9 @@ public final class client extends GameShell {
         }
         if (arg1 == 1) {
             GameShell.canvasWid = frameWidth;
-            leftMargin = (GameShell.frameWid - frameWidth) / 2;
+            canvasX = (GameShell.frameWid - frameWidth) / 2;
             GameShell.canvasHei = frameHeight;
-            topMargin = 0;
+            canvasY = 0;
         } else {
             method4635();
         }
@@ -2347,9 +2449,9 @@ public final class client extends GameShell {
             toolkit.method463(GameShell.canvas, GameShell.canvasWid, GameShell.canvasHei);
             if (GameShell.frame == var5) {
                 Insets var7 = GameShell.frame.getInsets();
-                GameShell.canvas.setLocation(leftMargin + var7.left, topMargin + var7.top);
+                GameShell.canvas.setLocation(canvasX + var7.left, canvasY + var7.top);
             } else {
-                GameShell.canvas.setLocation(leftMargin, topMargin);
+                GameShell.canvas.setLocation(canvasX, canvasY);
             }
         }
         if (arg1 >= 2) {
@@ -2367,7 +2469,12 @@ public final class client extends GameShell {
         for (int var8 = 0; var8 < 100; var8++) {
             topLevelComponentRedrawRequestedTemp[var8] = true;
         }
-        fullredraw = true;
+        fullRedraw = true;
+
+        ResizeableChanged event = new ResizeableChanged();
+        event.setResized(false);
+        instance.callbacks.post(event);
+
     }
 
     @ObfuscatedName("aev.gw(B)V")
@@ -2402,9 +2509,9 @@ public final class client extends GameShell {
                     }
                     if (getWindowMode() == 1) {
                         GameShell.canvasWid = frameWidth;
-                        leftMargin = (GameShell.frameWid - frameWidth) / 2;
+                        canvasX = (GameShell.frameWid - frameWidth) / 2;
                         GameShell.canvasHei = frameHeight;
-                        topMargin = 0;
+                        canvasY = 0;
                     } else {
                         method4635();
                     }
@@ -2416,9 +2523,9 @@ public final class client extends GameShell {
                     }
                     if (GameShell.frame == var1) {
                         Insets var3 = GameShell.frame.getInsets();
-                        GameShell.canvas.setLocation(leftMargin + var3.left, topMargin + var3.top);
+                        GameShell.canvas.setLocation(canvasX + var3.left, canvasY + var3.top);
                     } else {
-                        GameShell.canvas.setLocation(leftMargin, topMargin);
+                        GameShell.canvas.setLocation(canvasX, canvasY);
                     }
                     method3538();
                     if (topLevelInterface != -1) {
@@ -2456,21 +2563,21 @@ public final class client extends GameShell {
             int var1 = GameShell.frameWid > 800 ? 800 : GameShell.frameWid;
             int var2 = GameShell.frameHei > 600 ? 600 : GameShell.frameHei;
             GameShell.canvasWid = var1;
-            leftMargin = (GameShell.frameWid - var1) / 2;
+            canvasX = (GameShell.frameWid - var1) / 2;
             GameShell.canvasHei = var2;
-            topMargin = 0;
+            canvasY = 0;
         } else if (var0 == 1) {
             int var3 = GameShell.frameWid > 1024 ? 1024 : GameShell.frameWid;
             int var4 = GameShell.frameHei > 768 ? 768 : GameShell.frameHei;
             GameShell.canvasWid = var3;
-            leftMargin = (GameShell.frameWid - var3) / 2;
+            canvasX = (GameShell.frameWid - var3) / 2;
             GameShell.canvasHei = var4;
-            topMargin = 0;
+            canvasY = 0;
         } else {
             GameShell.canvasWid = GameShell.frameWid;
-            leftMargin = 0;
+            canvasX = 0;
             GameShell.canvasHei = GameShell.frameHei;
-            topMargin = 0;
+            canvasY = 0;
         }
     }
 
@@ -2479,8 +2586,8 @@ public final class client extends GameShell {
         if (GameShell.fsFrame != null) {
             return;
         }
-        int var0 = leftMargin;
-        int var1 = topMargin;
+        int var0 = canvasX;
+        int var1 = canvasY;
         int var2 = GameShell.frameWid - GameShell.canvasWid - var0;
         int var3 = GameShell.frameHei - GameShell.canvasHei - var1;
         if (var0 <= 0 && var2 <= 0 && var1 <= 0 && var3 <= 0) {
@@ -12377,5 +12484,246 @@ public final class client extends GameShell {
         if (modewhere != ModeWhere.field6363) {
             JavascriptFunction.field3150.method4761();
         }
+    }
+
+    /**
+     * Runelite
+     */
+    @javax.inject.Inject
+    private Callbacks callbacks;
+
+    @Override
+    public Callbacks getCallbacks() {
+        return callbacks;
+    }
+
+    @Override
+    public Logger getLogger() {
+        return log;
+    }
+
+    @Override
+    public EnumSet<WorldType> getWorldType() {
+        return EnumSet.of(WorldType.MEMBERS);
+    }
+
+    @Override
+    public int getTickCount() {
+        return 0;
+    }
+
+    @Override
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    @Override
+    public void resizeCanvas() {
+
+    }
+
+
+    @Override
+    public void setTickCount(int tickCount) {
+
+    }
+
+    public static boolean stretchedEnabled;
+
+    public static boolean stretchedFast;
+
+    public static boolean stretchedIntegerScaling;
+
+    public static boolean stretchedKeepAspectRatio;
+
+    public static double scalingFactor;
+
+    public static Dimension cachedStretchedDimensions;
+
+    public static Dimension cachedRealDimensions;
+
+    @Override
+    public boolean isStretchedEnabled() {
+        return stretchedEnabled;
+    }
+
+    @Override
+    public void setStretchedEnabled(boolean state) {
+        stretchedEnabled = state;
+    }
+
+    @Override
+    public boolean isStretchedFast() {
+        return stretchedFast;
+    }
+
+    @Override
+    public void setStretchedFast(boolean state) {
+        stretchedFast = state;
+    }
+
+    @Override
+    public void setStretchedIntegerScaling(boolean state) {
+        stretchedIntegerScaling = state;
+    }
+
+    @Override
+    public void setStretchedKeepAspectRatio(boolean state) {
+        stretchedKeepAspectRatio = state;
+    }
+
+    @Override
+    public void setScalingFactor(int factor) {
+        scalingFactor = 1 + (factor / 100D);
+    }
+
+    @Override
+    public double getScalingFactor() {
+        return scalingFactor;
+    }
+
+    @Override
+    public void invalidateStretching(boolean resize) {
+        cachedRealDimensions = null;
+        cachedStretchedDimensions = null;
+
+        if (resize && isResized()) {
+			/*
+				Tells the game to run resizeCanvas the next frame.
+
+				This is useful when resizeCanvas wouldn't usually run,
+				for example when we've only changed the scaling factor
+				and we still want the game's canvas to resize
+				with regards to the new maximum bounds.
+			 */
+            setResizeCanvasNextFrame(true);
+        }
+    }
+
+
+    @Override
+    public Dimension getStretchedDimensions() {
+        if (cachedStretchedDimensions == null) {
+            Container canvasParent = getCanvas().getParent();
+
+            int parentWidth = canvasParent.getWidth();
+            int parentHeight = canvasParent.getHeight();
+
+            Dimension realDimensions = getRealDimensions();
+
+            if (stretchedKeepAspectRatio) {
+                double aspectRatio = realDimensions.getWidth() / realDimensions.getHeight();
+
+                int tempNewWidth = (int) (parentHeight * aspectRatio);
+
+                if (tempNewWidth > parentWidth) {
+                    parentHeight = (int) (parentWidth / aspectRatio);
+                } else {
+                    parentWidth = tempNewWidth;
+                }
+            }
+
+            if (stretchedIntegerScaling) {
+                if (parentWidth > realDimensions.width) {
+                    parentWidth = parentWidth - (parentWidth % realDimensions.width);
+                }
+                if (parentHeight > realDimensions.height) {
+                    parentHeight = parentHeight - (parentHeight % realDimensions.height);
+                }
+            }
+
+            cachedStretchedDimensions = new Dimension(parentWidth, parentHeight);
+        }
+
+        return cachedStretchedDimensions;
+    }
+
+    @Override
+    public Dimension getRealDimensions() {
+        if (!isStretchedEnabled()) {
+            return getCanvas().getSize();
+        }
+
+        if (cachedRealDimensions == null) {
+            if (isResized()) {
+                Container canvasParent = getCanvas().getParent();
+
+                int parentWidth = canvasParent.getWidth();
+                int parentHeight = canvasParent.getHeight();
+
+                int newWidth = (int) (parentWidth / scalingFactor);
+                int newHeight = (int) (parentHeight / scalingFactor);
+
+                if (newWidth < Constants.GAME_FIXED_WIDTH || newHeight < Constants.GAME_FIXED_HEIGHT) {
+                    double scalingFactorW = (double) parentWidth / Constants.GAME_FIXED_WIDTH;
+                    double scalingFactorH = (double) parentHeight / Constants.GAME_FIXED_HEIGHT;
+                    double scalingFactor = Math.min(scalingFactorW, scalingFactorH);
+
+                    newWidth = (int) (parentWidth / scalingFactor);
+                    newHeight = (int) (parentHeight / scalingFactor);
+                }
+
+                cachedRealDimensions = new Dimension(newWidth, newHeight);
+            } else {
+                cachedRealDimensions = Constants.GAME_FIXED_SIZE;
+            }
+        }
+
+        return cachedRealDimensions;
+    }
+
+    @Override
+    public Point getMouseCanvasPosition() {
+        return new Point(Statics.mouse.getX(), Statics.mouse.getY());
+    }
+
+    @Override
+    public int getViewportXOffset() {
+        return 0;
+    }
+
+    @Override
+    public int getViewportYOffset() {
+        return 0;
+    }
+
+    @Override
+    public SpritePixels createSpritePixels(int[] pixels, int width, int height) {
+        return null;
+    }
+
+    @Override
+    public IndexedSprite createIndexedSprite() {
+        return null;
+    }
+
+    @Override
+    public GameState getGameState() {
+        return null;
+    }
+
+    @Override
+    public long getAccountHash() {
+        return 0;
+    }
+
+    @Override
+    public void stopNow() {
+        setStopTimeMs(1);
+    }
+
+    @Override
+    public void setStopTimeMs(long time) {
+        GameShell.stopTimeMs = time;
+    }
+
+    @Override
+    public boolean isGpu() {
+        return false;
+    }
+
+    @Override
+    public boolean isResized() {
+        return getWindowMode() != 0;
     }
 }

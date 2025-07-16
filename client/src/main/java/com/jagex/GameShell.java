@@ -2,8 +2,11 @@ package com.jagex;
 
 import deob.ObfuscatedName;
 import com.jagex.libs.jaclib.nanotime.QueryPerformanceCounter;
+import net.runelite.api.GameEngine;
+import net.runelite.api.events.FocusChanged;
 
 import java.applet.Applet;
+import java.applet.AppletStub;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -12,7 +15,7 @@ import java.io.RandomAccessFile;
 import java.net.URL;
 
 @ObfuscatedName("nv")
-public abstract class GameShell implements GameShellStub, Runnable, FocusListener, WindowListener {
+public abstract class GameShell extends Applet implements GameShellStub, AppletStub,Runnable, FocusListener, WindowListener, GameEngine {
 
     @ObfuscatedName("nv.j")
     public static long field4120 = 20000000L;
@@ -21,7 +24,7 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public static int field4121 = 0;
 
     @ObfuscatedName("nv.m")
-    public static long[] field4123 = new long[32];
+    public static long[] graphicsTickTimes = new long[32];
 
     @ObfuscatedName("nv.l")
     public static long[] field4145 = new long[32];
@@ -45,10 +48,10 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public static int lastFullscreenHeight;
 
     @ObfuscatedName("nv.w")
-    public static int leftMargin = 0;
+    public static int canvasX = 0;
 
     @ObfuscatedName("nv.b")
-    public static int topMargin = 0;
+    public static int canvasY = 0;
 
     @ObfuscatedName("nv.i")
     public static String field4128 = null;
@@ -63,13 +66,13 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public static Canvas canvas;
 
     @ObfuscatedName("nv.g")
-    public static volatile boolean fullredraw = true;
+    public static volatile boolean fullRedraw = true;
 
     @ObfuscatedName("nv.e")
     public static int field4130 = 500;
 
     @ObfuscatedName("nv.ay")
-    public static volatile boolean field4131 = false;
+    public static volatile boolean isCanvasInvalid = false;
 
     @ObfuscatedName("nv.af")
     public static volatile long field4132 = 0L;
@@ -81,7 +84,7 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public static boolean field4146 = false;
 
     @ObfuscatedName("nv.ap")
-    public static volatile boolean field4134 = true;
+    public static volatile boolean volatileFocus = true;
 
     @ObfuscatedName("nv.ak")
     public static BufferedFile field4155 = null;
@@ -96,7 +99,7 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public static GameShellEnvironment field4148 = null;
 
     @ObfuscatedName("nv.bz")
-    public static long field4149 = 0L;
+    public static long stopTimeMs = 0L;
 
     @ObfuscatedName("nv.bv")
     public static boolean field4153 = false;
@@ -117,14 +120,18 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         Statics.field6387 = arg0;
     }
 
+    private Thread thread;
+
     @ObfuscatedName("nv.u(Lnh;Ljava/lang/String;Ljava/lang/String;IIIIZB)V")
     public final void method6717(GameShellFrameParameters arg0, String arg1, String arg2, int arg3, int arg4, int arg5, int arg6, boolean arg7) {
         try {
             this.method6678(GameShellEnvironment.field4117, arg7);
             frameWid = canvasWid = arg0.method6856();
             frameHei = canvasHei = arg0.method6868();
-            leftMargin = 0;
-            topMargin = 0;
+
+
+            canvasX = 0;
+            canvasY = 0;
             if (Statics.getEnvironment() == GameShellEnvironment.field4116) {
                 frameWid += arg0.method6855() * 2;
                 frameHei += arg0.method6859() * 2;
@@ -527,17 +534,17 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         canvas.setVisible(true);
         if (frame == arg0) {
             Insets var2 = frame.getInsets();
-            canvas.setLocation(leftMargin + var2.left, topMargin + var2.top);
+            canvas.setLocation(canvasX + var2.left, canvasY + var2.top);
         } else {
-            canvas.setLocation(leftMargin, topMargin);
+            canvas.setLocation(canvasX, canvasY);
         }
         canvas.addFocusListener(this);
         canvas.requestFocus();
         Statics.field578 = true;
-        field4134 = true;
+        volatileFocus = true;
         canvas.setFocusTraversalKeysEnabled(false);
-        fullredraw = true;
-        field4131 = false;
+        fullRedraw = true;
+        isCanvasInvalid = false;
         field4132 = MonotonicTime.get();
     }
 
@@ -616,10 +623,14 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         getTopContainer().setFocusCycleRoot(true);
         maxHeapMemoryMb = (int) (Runtime.getRuntime().maxMemory() / 1048576L) + 1;
         availableProcessors = Runtime.getRuntime().availableProcessors();
+
+        thread = Thread.currentThread();
+        thread.setName("Client");
+
         this.addcanvas();
         this.maininit();
         Statics.field8481 = Timer.method4777();
-        while (field4149 == 0L || MonotonicTime.get() < field4149) {
+        while (stopTimeMs == 0L || MonotonicTime.get() < stopTimeMs) {
             Statics.field4138 = Statics.field8481.method6831(field4120);
             for (int var5 = 0; var5 < Statics.field4138; var5++) {
                 this.mainloopwrapper();
@@ -627,6 +638,10 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
             this.mainredrawwrapper();
             method1840(canvas);
         }
+    }
+
+    public final void post(Object var1) {
+        method1840(var1);
     }
 
     @ObfuscatedName("ax.v(Ljava/lang/Object;S)V")
@@ -654,7 +669,7 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         if (var3 != 0L && var1 > var3) {
         }
         synchronized (this) {
-            Statics.field578 = field4134;
+            Statics.field578 = volatileFocus;
         }
         this.mainloop();
     }
@@ -662,8 +677,8 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     @ObfuscatedName("nv.h(I)V")
     public void mainredrawwrapper() {
         long var1 = MonotonicTime.get();
-        long var3 = field4123[Statics.field1198];
-        field4123[Statics.field1198] = var1;
+        long var3 = graphicsTickTimes[Statics.field1198];
+        graphicsTickTimes[Statics.field1198] = var1;
         Statics.field1198 = Statics.field1198 + 1 & 0x1F;
         if (var3 != 0L && var1 > var3) {
             int var5 = (int) (var1 - var3);
@@ -671,18 +686,19 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         }
         if (++field4130 - 1 > 50) {
             field4130 -= 50;
-            fullredraw = true;
+            fullRedraw = true;
             canvas.setSize(canvasWid, canvasHei);
             canvas.setVisible(true);
             if (frame != null && fsFrame == null) {
                 Insets var6 = frame.getInsets();
-                canvas.setLocation(leftMargin + var6.left, topMargin + var6.top);
+                canvas.setLocation(canvasX + var6.left, canvasY + var6.top);
             } else {
-                canvas.setLocation(leftMargin, topMargin);
+                canvas.setLocation(canvasX, canvasY);
             }
         }
         this.method6673();
     }
+
 
     @ObfuscatedName("nv.r(I)Ljava/lang/String;")
     public String method6701() {
@@ -743,7 +759,7 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
     public static final void method2427() {
         Statics.field8481.method6833();
         for (int var0 = 0; var0 < 32; var0++) {
-            field4123[var0] = 0L;
+            graphicsTickTimes[var0] = 0L;
         }
         for (int var1 = 0; var1 < 32; var1++) {
             field4145[var1] = 0L;
@@ -758,19 +774,19 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
 
     public void start() {
         if (!field4153) {
-            field4149 = 0L;
+            stopTimeMs = 0L;
         }
     }
 
     public void stop() {
         if (!field4153) {
-            field4149 = MonotonicTime.get() + 4000L;
+            stopTimeMs = MonotonicTime.get() + 4000L;
         }
     }
 
     public void destroy() {
         if (!field4153) {
-            field4149 = MonotonicTime.get();
+            stopTimeMs = MonotonicTime.get();
             PreciseSleep.method7052(5000L);
             this.method6664(false);
         }
@@ -784,22 +800,33 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         if (field4153) {
             return;
         }
-        fullredraw = true;
+        fullRedraw = true;
         if (MonotonicTime.get() - field4132 > 1000L) {
             Rectangle var2 = arg0.getClipBounds();
             if (var2 == null || var2.width >= frameWid && var2.height >= frameHei) {
-                field4131 = true;
+                isCanvasInvalid = true;
+                onReplaceCanvasNextFrameChanged(0);
             }
         }
     }
 
+    public void onReplaceCanvasNextFrameChanged(int idx) {
+        if (client.instance != null && client.instance.isGpu() && isReplaceCanvasNextFrame()) {
+            setReplaceCanvasNextFrame(false);
+            setResizeCanvasNextFrame(true);
+        }
+    }
+
     public final void focusGained(FocusEvent arg0) {
-        field4134 = true;
-        fullredraw = true;
+        volatileFocus = true;
+        fullRedraw = true;
+        final FocusChanged focusChanged = new FocusChanged();
+        focusChanged.setFocused(true);
+        client.instance.getCallbacks().post(focusChanged);
     }
 
     public final void focusLost(FocusEvent arg0) {
-        field4134 = false;
+        volatileFocus = false;
     }
 
     public final void windowActivated(WindowEvent arg0) {
@@ -944,6 +971,74 @@ public abstract class GameShell implements GameShellStub, Runnable, FocusListene
         } else {
             throw new IllegalStateException();
         }
+    }
+
+    int maxCanvasWidth;
+    int maxCanvasHeight;
+    boolean resizeCanvasNextFrame = true;
+
+    protected final void setMaxCanvasSize(int width, int height) {
+        if (client.instance.isStretchedEnabled() && client.instance.isResized()) {
+            return;
+        }
+
+        if (maxCanvasWidth != width || height != maxCanvasHeight) {
+            flagResize();
+        }
+
+        maxCanvasWidth = width;
+        maxCanvasHeight = height;
+
+    }
+
+
+    final void flagResize() {
+        resizeCanvasNextFrame = true;
+    }
+
+    @Override
+    public boolean isResizeCanvasNextFrame() {
+        return resizeCanvasNextFrame;
+    }
+
+    @Override
+    public void setResizeCanvasNextFrame(boolean resize) {
+        resizeCanvasNextFrame = resize;
+    }
+
+    @Override
+    public boolean isReplaceCanvasNextFrame() {
+        return isCanvasInvalid;
+    }
+
+    @Override
+    public void setReplaceCanvasNextFrame(boolean replace) {
+        isCanvasInvalid = replace;
+    }
+
+    @Override
+    public void setMaxCanvasWidth(int width) {
+        maxCanvasWidth = width;
+    }
+
+    @Override
+    public void setMaxCanvasHeight(int height) {
+        maxCanvasHeight = height;
+    }
+
+    @Override
+    public void setFullRedraw(boolean fullRedraw) {
+        GameShell.fullRedraw = fullRedraw;
+    }
+
+    @Override
+    public Thread getClientThread() {
+        return thread;
+    }
+
+    @Override
+    public boolean isClientThread() {
+        return thread == Thread.currentThread();
     }
 
     @ObfuscatedName("nv.af(B)V")
