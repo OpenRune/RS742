@@ -1420,6 +1420,10 @@ public final class client extends GameShell {
         if (DeveloperConsole.method14925()) {
             DeveloperConsole.method12621();
         }
+
+        System.out.println("State: " + state + " isStateTitle:  " +  isStateTitle(state) + "  isStateLobby: " + isStateLobby(state) + " isStateGame: " + isStateGame(state) + " isStateRebuild:" + isStateRebuild(state));
+
+
         if (isStateLoading(state)) {
             Loading.method12645();
             GameShell.method2427();
